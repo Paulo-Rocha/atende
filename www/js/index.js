@@ -41,7 +41,7 @@
         conn = "Não conectado";
         if(conn.length === 13) {
             document.getElementById('btn_tribus').innerHTML = "Verificar conexão";    
-            if ((localStorage.getItem("username")===null){
+            if (localStorage.getItem("username")===null){
                 alert("Precisa de internet para fazer o seu cadastro no sistema");
                 document.getElementById("cadastrar").style.display = "block";
                 document.getElementById("cadastrado").style.display = "none";
@@ -49,7 +49,7 @@
         }
         if ((localStorage.getItem("username")!==null)&&(conn.length === 6)) { //já tem cadastro e está no wifi
             abrirTribus('http://www.tribus.atendeweb.com');
-        }else if (localStorage.getItem("username")===null)&&(conn.length!==13) { //N tem cadastro e está conectado
+        }else if ((localStorage.getItem("username")===null)&&(conn.length!==13)) { //N tem cadastro e está conectado
                 abrirTribus('http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus');  
               }else if((localStorage.getItem("username")!==null)&&(conn.length!==13)) { //N tem cadastro e está conectado
                 document.getElementById('conn').innerHTML = localStorage.getItem("username");
