@@ -68,16 +68,29 @@
             <p>Unique Id...........: <span id='uuid'></span></p> 
             <p>Serial..............: <span id='serial'></span></p> 
           -->  
-            <p> Olá %User%</p>
-            <p> Seja bem vindo a sua tribo:<br/></p>
-            <br/>
-            <p>Bônus Disponíveis:<p>
-            <p>Bônus Bloqueados.:<p>    
-            <br/>    
-            <p>Última Atualizado em: <i>20/mai/2018</i></p>
-            <br/>
-            <p>Tipo de conexão.....: <span id='conn'></span></p> 
+
+            <div id="cadastrado">
+                <p> Olá <span id="user_name"></span></p>
+                <p> Seja bem vindo a sua tribo:<br/></p>
+                <br/>
+                <p>Bônus Disponíveis:<p>
+                <p>Bônus Bloqueados.:<p>    
+                <br/>    
+                <p>Última Atualizado em: <i>20/mai/2018</i></p>
+                <br/>
+                <p>Tipo de conexão.....: <span id='conn'></span></p> 
+            </div>
+            <div id="cadastrar" style="display:none;">
+                <h1>Seja bem vindo ao <b>TRIBUS</b>! </h1>
+                <br/>
+                <p> Você precisa de acesso a internet para completar seu cadastro!</p>
+            </div>
+
             <button type="button" id='btn_tribus' onclick="app.btnTribus();" disabled>Entrar</button>
+
+
+   
+            
             
         </div>
     </div><!-- /content -->

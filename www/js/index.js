@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
- var myDB;
+
  var app = {
     // Application Constructor
     initialize: function() {
@@ -35,15 +35,25 @@
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-		alert("javascript document ready ok");
-		
-        
-		
-        var conn = checkConnection();
+     
 		document.getElementById('conn').innerHTML = conn;
         document.getElementById("btn_tribus").disabled = false;    
+        conn = "Não conectado";
         if(conn.length === 13) {
             document.getElementById('btn_tribus').innerHTML = "Verificar conexão";    
+            if ((localStorage.getItem("username")===null){
+                alert("Precisa de internet para fazer o seu cadastro no sistema");
+                document.getElementById("cadastrar").style.display = "block";
+                document.getElementById("cadastrado").style.display = "none";
+            }
+        }
+        if ((localStorage.getItem("username")!==null)&&(conn.length === 6)) { //já tem cadastro e está no wifi
+            abrirTribus('http://www.tribus.atendeweb.com');
+        }else if (localStorage.getItem("username")===null)&&(conn.length!==13) { //N tem cadastro e está conectado
+                abrirTribus('http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus');  
+              }else if((localStorage.getItem("username")!==null)&&(conn.length!==13)) { //N tem cadastro e está conectado
+                document.getElementById('conn').innerHTML = localStorage.getItem("username");
+            }
         }
        /*
         document.getElementById('cordova').innerHTML = device.cordova;
@@ -55,7 +65,6 @@
 		document.getElementById('uuid').innerHTML = device.uuid;
 		document.getElementById('serial').innerHTML = device.serial;
        */ 
-		myDB = window.sqlitePlugin.openDatabase({name: "mySQLite.db", location: 'default'});
         
     },
     // Update DOM on a Received Event
@@ -82,59 +91,6 @@
     }
 	
 };
-
-//Create new table
-    function createTable(){
-		alert('oi');
-		myDB.transaction(function(transaction) {
-		transaction.executeSql('CREATE TABLE IF NOT EXISTS phonegap_pro (id integer primary key, title text, desc text)', [],
-			function(tx, result) {
-				alert("Tabela criada com sucesso!");
-			}, 
-			function(error) {
-				alert("Erro ao criar a tabela.");
-			});
-		});
-        alert("terminei a cricacao da Table");
-	}
-//Insert New Data
-	function insert(){
-		//var title=$("#title").val();
-		//var desc=$("#desc").val();
-		var title = document.getElementById('title').value;
-		var desc = document.getElementById('desc').value;
-		
-		alert("Titulo.:"+title+"\nDescrição:"+desc);
-		console.log(title +""+ desc);
-		myDB.transaction(function(transaction) {
-			var executeQuery = "INSERT INTO phonegap_pro (title, desc) VALUES (?,?)";             
-			transaction.executeSql(executeQuery, [title,desc]
-				, function(tx, result) {
-					alert('Inserido!');
-				},
-				function(error){
-					alert('Erro ocorrido.'); 
-			});
-		});
-	
-	}
-//Display Table Data
-	function showTable(){
-		//$("#TableData").html("");
-		var textoTable= "";
-		alert('oi');
-		myDB.transaction(function(transaction) {
-			transaction.executeSql('SELECT * FROM phonegap_pro', [], function (tx, results) {
-				var len = results.rows.length, i;
-				//$("#rowCount").html(len);
-				document.getElementById('rowCount').innerHTML = len;
-				for (i = 0; i < len; i++){
-					textoTable += "<tr><td>"+results.rows.item(i).id+"</td><td>"+results.rows.item(i).title+"</td><td>"+results.rows.item(i).desc+"</td><td><a href='edit.html?id="+results.rows.item(i).id+"&title="+results.rows.item(i).title+"&desc="+results.rows.item(i).desc+"'>Edit</a> &nbsp;&nbsp; <a class='delete' href='#' id='"+results.rows.item(i).id+"'>Delete</a></td></tr>";
-				}
-			}, null);
-		});
-		document.getElementById('TableData').innerHTML = textoTable;
-	}	
 
 //===================================================================
 function checkConnection() {
