@@ -1,6 +1,11 @@
 
 /*Adicionado para o projeto Tribus*/
 
+ .tribus-bg{
+      background: url("images/fundo.png") repeat scroll center top;
+      margin-top:0;
+      }
+
 .footer-button-left,
 .footer-button-right {
     position:absolute !important;

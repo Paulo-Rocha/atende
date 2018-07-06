@@ -1,3 +1,4 @@
+ var op;
  var app = {
     // Application Constructor
     initialize: function() {
@@ -20,7 +21,7 @@
             }
 */
         var conn = checkConnection();
-        var op = conn.split("|");
+        op = conn.split("|");
         var dataConn;
         if(op[0]!=='0'){
           dataConn = dataCloud(device.uuid);
@@ -34,7 +35,7 @@
     },
     // Aguarda dados de conexão e sincronia de favoritos
     ok_conn_sync: function() { 
-        alert ("ok_conn_sync, sincrionizado...vamos em frente");   
+        alert ("ok_conn_sync, sincrionizado...vamos em frente\nop[0]="+op[0]+"\nop[1]="+op[1]+"\nUserName="+localStorage.getItem("username"));   
         if(op[0] === '0') {
             document.getElementById('btn_tribus').innerHTML = "Verificar conexão";    
             if(localStorage.getItem("username")===null){
@@ -46,8 +47,9 @@
         }
         
         if (localStorage.getItem("username")!==null) {
-            document.getElementById('username').innerHTML = localStorage.getItem("username");
+            document.getElementById('user_name').innerHTML = localStorage.getItem("username");
             if(op[0] === '1') { //já tem cadastro e está no wifi
+              alert('Seguindo para Tribus');  
               abrirTribus('http://www.tribus.atendeweb.com');
             }  
         }
@@ -175,17 +177,18 @@ function dataCloud(uuid){
            type : 'post',
            data : {'action':'sync','uuid':uuid,'user_id':user_id},
            dataType: 'html',
+
            beforeSend: function(){
-            
            },
            timeout: 3000,    
                 success: function(retorno){
                     alert (retorno);
                     localStorage.setItem("dataConn", retorno);
+                    localStorage.setItem("username", "Paulo");
                     app.ok_conn_sync();
                 },
                 error: function(erro){  
-                   alert("Falha ao sincronizar dados. Favor sair e tentar conectar novamente!");
+                   alert("Falha ao sincronizar dados.\nSerá realizada nova tentativa na próxima conexão!\nErro:\n"+erro);
                 }       
     });  
 }
