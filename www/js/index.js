@@ -1,38 +1,11 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
-
  var app = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
     },
-    // Bind Event Listeners
-    //
-    // Bind any events that are required on startup. Common events are:
-    // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         //alert ("onDeviceReady executando...");
         app.receivedEvent('deviceready');
@@ -48,14 +21,23 @@
 */
         var conn = checkConnection();
         var op = conn.split("|");
+        var dataConn;
+        if(op[0]!=='0'){
+          dataConn = dataCloud(device.uuid);
+         
+        }else if (localStorage.getItem("dataConn")!==null) {
+          dataConn = localStorage.getItem("dataConn");
+        }
+
         document.getElementById('conn').innerHTML = op[1];
-        //op[0]='2'; //sem internet
-		document.getElementById('conn').innerHTML = op[1];
         document.getElementById("btn_tribus").disabled = false;    
-        
+    },
+    // Aguarda dados de conexão e sincronia de favoritos
+    ok_conn_sync: function() { 
+        alert ("ok_conn_sync, sincrionizado...vamos em frente");   
         if(op[0] === '0') {
             document.getElementById('btn_tribus').innerHTML = "Verificar conexão";    
-            if (localStorage.getItem("username")===null){
+            if(localStorage.getItem("username")===null){
                 document.getElementById("cadastrar").style.display = "block";
                 document.getElementById("cadastrado").style.display = "none";
             }else{
@@ -171,9 +153,7 @@ function executeScriptCallBack(params) {
         //   + params.message + "'");
 		document.getElementById('status-message').innerHTML = "Desculpe, não consegui abrir o app Tribus. Messagem de erro foi : '"
            + params.message + "'";
-		
     }
- 
 } 
 
 function cadastro(url){
@@ -182,7 +162,26 @@ function cadastro(url){
     var win = cordova.InAppBrowser.open(url, target, options);
     //var win = window.open(url, "_blank", "EnableViewPortScale=yes" );
     win.addEventListener( "loadstop", function() {
-                    win.executeScript({ code: "document.getElementById('socket').value=199;" });
-                            //,function( x ) { alert(x);  });
+                    win.executeScript({ code: "document.getElementById('socket').value="+device.uuid+";" });
+                    //,function( x ) { alert(x);  });
                 });
 }   
+function dataCloud(uuid){
+    var user_id = localStorage.getItem("dataConn")!==null ? localStorage.getItem('user_id') : "";
+    $.ajax({url : 'http://www.atendeweb.net/atende/login/tribus/sync_rpc.php',
+           type : 'post',
+           data : {'action':'sync','uuid':uuid,'user_id':user_id},
+           dataType: 'html',
+           beforeSend: function(){
+           },
+           timeout: 3000,    
+                success: function(retorno){
+                    alert (retorno);
+                    localStorage.setItem("dataConn", retorno);
+                    app.ok_conn_sync();
+                },
+                error: function(erro){  
+                   alert("Falha ao sincronizar dados. Favor sair e tentar conectar novamente!");
+                }       
+    });  
+}
