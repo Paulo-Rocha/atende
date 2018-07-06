@@ -34,27 +34,49 @@
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
+        //alert ("onDeviceReady executando...");
         app.receivedEvent('deviceready');
-     
-		document.getElementById('conn').innerHTML = conn;
+        
+        /*
+        try {
+                localStorage.setItem("username", "Paulo Rocha!");
+        }   catch (e) {
+                if (e == QUOTA_EXCEEDED_ERR) {
+                    alert('Quota excedida!');
+                }
+            }
+*/
+        var conn = checkConnection();
+        var op = conn.split("|");
+        document.getElementById('conn').innerHTML = op[1];
+        //op[0]='2'; //sem internet
+		document.getElementById('conn').innerHTML = op[1];
         document.getElementById("btn_tribus").disabled = false;    
-        conn = "Não conectado";
-        if(conn.length === 13) {
+        
+        if(op[0] === '0') {
             document.getElementById('btn_tribus').innerHTML = "Verificar conexão";    
             if (localStorage.getItem("username")===null){
-                alert("Precisa de internet para fazer o seu cadastro no sistema");
                 document.getElementById("cadastrar").style.display = "block";
                 document.getElementById("cadastrado").style.display = "none";
+            }else{
+                document.getElementById('username').innerHTML = localStorage.getItem("username");
             }
         }
-        if ((localStorage.getItem("username")!==null)&&(conn.length === 6)) { //já tem cadastro e está no wifi
-            abrirTribus('http://www.tribus.atendeweb.com');
-        }else if ((localStorage.getItem("username")===null)&&(conn.length!==13)) { //N tem cadastro e está conectado
-                abrirTribus('http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus');  
-              }else if((localStorage.getItem("username")!==null)&&(conn.length!==13)) { //N tem cadastro e está conectado
-                document.getElementById('conn').innerHTML = localStorage.getItem("username");
-            }
+        
+        if (localStorage.getItem("username")!==null) {
+            document.getElementById('username').innerHTML = localStorage.getItem("username");
+            if(op[0] === '1') { //já tem cadastro e está no wifi
+              abrirTribus('http://www.tribus.atendeweb.com');
+            }  
         }
+        if ((localStorage.getItem("username")===null)&&(op[0]==='1')) { //N tem cadastro e está conectado
+                //abrirTribus('http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus');  
+                var url ='http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus';
+                alert('Gerando socket...');
+                cadastro(url);
+        }
+
+        
        /*
         document.getElementById('cordova').innerHTML = device.cordova;
 		document.getElementById('model').innerHTML = device.model;
@@ -71,11 +93,11 @@
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
         console.log('Received Event: ' + id);
-        alert('A API deviceready foi carregada!');
+        //alert('A API deviceready foi carregada!');
     },
     btnTribus: function (){
         var x = document.getElementById('btn_tribus').innerHTML;
-        alert (x);
+        //alert (x);
         if(x.length===6){
             abrirTribus('http://www.tribus.atendeweb.com');
         }else{
@@ -97,14 +119,14 @@ function checkConnection() {
     var networkState = navigator.connection.type;
 
     var states = {};
-    states[Connection.UNKNOWN]  = 'Não Identificada';
-    states[Connection.ETHERNET] = 'Cabo de Rede';
-    states[Connection.WIFI]     = 'Conexão WiFi';
-    states[Connection.CELL_2G]  = 'Chip 2G';
-    states[Connection.CELL_3G]  = 'Chip 3G';
-    states[Connection.CELL_4G]  = 'Chip 4G';
-    states[Connection.CELL]     = 'Celular generica conexão';
-    states[Connection.NONE]     = 'Não conectado';
+    states[Connection.UNKNOWN]  = '2|Não Identificada';  //1:Entra autom..2:Deixa que o usuário cilque, 0-verificar a internet
+    states[Connection.ETHERNET] = '1|Cabo de Rede';
+    states[Connection.WIFI]     = '1|Conexão WiFi';
+    states[Connection.CELL_2G]  = '2|Chip 2G';
+    states[Connection.CELL_3G]  = '2|Chip 3G';
+    states[Connection.CELL_4G]  = '2|Chip 4G';
+    states[Connection.CELL]     = '2|Celular generica conexão';
+    states[Connection.NONE]     = '0|Não conectado';
 
     return states[networkState];
 }
@@ -153,3 +175,14 @@ function executeScriptCallBack(params) {
     }
  
 } 
+
+function cadastro(url){
+    var target = "_self";
+    var options = "location=no,hidden=no";
+    var win = cordova.InAppBrowser.open(url, target, options);
+    //var win = window.open(url, "_blank", "EnableViewPortScale=yes" );
+    win.addEventListener( "loadstop", function() {
+                    win.executeScript({ code: "document.getElementById('socket').value=199;" });
+                            //,function( x ) { alert(x);  });
+                });
+}   
