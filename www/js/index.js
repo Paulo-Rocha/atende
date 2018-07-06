@@ -168,11 +168,15 @@ function cadastro(url){
 }   
 function dataCloud(uuid){
     var user_id = localStorage.getItem("dataConn")!==null ? localStorage.getItem('user_id') : "";
+
+    
+    $.support.cors = true;
     $.ajax({url : 'http://www.atendeweb.net/atende/login/tribus/sync_rpc.php',
            type : 'post',
            data : {'action':'sync','uuid':uuid,'user_id':user_id},
            dataType: 'html',
            beforeSend: function(){
+            
            },
            timeout: 3000,    
                 success: function(retorno){
