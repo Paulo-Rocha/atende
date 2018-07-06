@@ -190,8 +190,8 @@ function dataCloud(uuid){
                 error: function(erro){  
                    console.log(erro);
                    alert("Falha ao sincronizar dados.\nSerá realizada nova tentativa na próxima conexão!\nErro:\n"+erro);
-                   document.getElementById('status').innerHTML = "erro"; 
-                   $("#status2").val(erro);          
+                   document.getElementById('status').innerHTML = erro; 
+                   $("#status2").html(erro);          
 
                 }       
     });  
