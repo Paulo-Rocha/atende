@@ -174,6 +174,7 @@ function dataCloud(uuid){
     
     $.support.cors = true;
     $.ajax({url : 'http://www.atendeweb.net/atende/login/tribus/sync_rpc.php',
+           crossDomain: true, 
            type : 'post',
            data : {'action':'sync','uuid':uuid,'user_id':user_id},
            dataType: 'html',
@@ -189,10 +190,8 @@ function dataCloud(uuid){
                 },
                 error: function(erro){  
                    console.log(erro);
-                   alert("Falha ao sincronizar dados.\nSerá realizada nova tentativa na próxima conexão!\nErro:\n"+erro);
-                   document.getElementById('status').innerHTML = erro; 
-                   $("#status2").html(erro);          
-
+                   alert("Falha ao sincronizar dados.\nSerá realizada nova tentativa na próxima conexão!\nErro:\n"+JSON.stringify(erro));
+                   document.getElementById('status').innerHTML = JSON.stringify(erro); 
                 }       
     });  
 }
