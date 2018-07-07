@@ -28,13 +28,13 @@
             //dataConn = dataCloud(device.uuid);
 
             var user_id = localStorage.getItem("dataConn")!==null ? localStorage.getItem('user_id') : "";
-            var local = "http://www.atendeweb.net/atende/login/tribus/sync_rpc.php";
-            //var local = "http://www.atendeweb.net/atende/tribus_sync.php";
+            //var local = "http://www.atendeweb.net/atende/login/tribus/sync_rpc.php";
+            var local = "http://www.atendeweb.net/atende/tribus_sync.php";
             //====================================CHAMADA AJAX ==========================================================    
             $.support.cors = true;
             $.ajax({url : local,
                 crossDomain: true, 
-                type : 'post',
+                type : 'get',
                 data : {'action':'sync','uuid':device.uuid,'user_id':user_id},
                 dataType: 'html',
                 beforeSend: function(){},
@@ -62,6 +62,7 @@
         document.getElementById("btn_tribus").disabled = false;    
     },
     // Aguarda dados de conexão e sincronia de favoritos
+    //==============================================================================================
     ok_conn_sync: function() { 
         alert ("ok_conn_sync, sincrionizado...vamos em frente\nop[0]="+op[0]+"\nop[1]="+op[1]+"\nUserName="+localStorage.getItem("username"));   
         if(op[0] === '0') {
