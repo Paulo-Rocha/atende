@@ -29,8 +29,8 @@
     <!-- This is a wide open CSP declaration. To lock this down for production, see below. 
     <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
     Alterei a meta para atender ao Ajax -->
-                      
-    <meta http-equiv="Content-Security-Policy" content="default-src http://atendeweb.net; child-src 'none'; object-src 'none'">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src http://atendeweb.net 'unsafe-inline'; child-src *; object-src * ;media-src *" />
     <!-- Good default declaration:
     * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
     * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
