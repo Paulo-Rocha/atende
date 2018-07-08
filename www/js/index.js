@@ -1,4 +1,5 @@
- var op;
+ var dataConn;
+ var conecta;
  var app = {
     // Application Constructor
     initialize: function() {
@@ -21,83 +22,77 @@
             }
 */
         var conn = checkConnection();
-        op = conn.split("|");
+        conecta = conn.split("|");
         var dataConn;
-        if(op[0]!=='0'){
 
-            //dataConn = dataCloud(device.uuid);
-
-            var user_id = localStorage.getItem("dataConn")!==null ? localStorage.getItem('user_id') : "";
-            //var local = "http://www.atendeweb.net/atende/login/tribus/sync_rpc.php";
-            var local = "http://www.atendeweb.net/atende/tribus_sync.php";
-            //====================================CHAMADA AJAX ==========================================================    
-            $.support.cors = true;
-            $.ajax({url : local,
-                crossDomain: true, 
-                type : 'get',
-                data : {'action':'sync','uuid':device.uuid,'user_id':user_id},
-                dataType: 'html',
-                beforeSend: function(){},
-                timeout: 3000,    
-                success: function(retorno){
-                    alert (retorno);
-                    localStorage.setItem("dataConn", retorno);
-                    localStorage.setItem("username", "Paulo");
-                    app.ok_conn_sync();
-                },
-                error: function(erro){  
-                    console.log(erro);
-                    alert("Falha ao sincronizar dados.\nSerá realizada nova tentativa na próxima conexão!\nErro:\n"+JSON.stringify(erro));
-                    document.getElementById('status').innerHTML = JSON.stringify(erro); 
-                }       
-            });  
-//============================================================================================
-
-
+        if(conecta[0]!=='0'){
+            dataCloud(conecta[1]);
         }else if (localStorage.getItem("dataConn")!==null) {
           dataConn = localStorage.getItem("dataConn");
         }
 
-        document.getElementById('conn').innerHTML = op[1];
+        document.getElementById('status2').innerHTML = conecta[1]+"["+conecta[0]+"]";
         document.getElementById("btn_tribus").disabled = false;    
     },
     // Aguarda dados de conexão e sincronia de favoritos
     //==============================================================================================
     ok_conn_sync: function() { 
-        alert ("ok_conn_sync, sincrionizado...vamos em frente\nop[0]="+op[0]+"\nop[1]="+op[1]+"\nUserName="+localStorage.getItem("username"));   
-        if(op[0] === '0') {
+        //buscar dados local do usuário
+        var cadastro = localStorage.getItem('user_id')!==null ? true : false;
+      /*  
+        if(localStorage.getItem('user_id')!==null){
+            alert('celular cadastrado!');
+        }else{
+            alert('celular ainda não cadastrado!');
+        }
+      */  
+        if(cadastro){ dataConn = JSON.parse( localStorage.getItem('dataConn') );}
+
+        if(conecta[0] === '0') { //Não está conectado
             document.getElementById('btn_tribus').innerHTML = "Verificar conexão";    
-            if(localStorage.getItem("username")===null){
+
+            if(cadastro){//Já tem cadastro - exibir informações na tela
+                document.getElementById("cadastrado").style.display = "block";
+                
+                document.getElementById('username').innerHTML = dataConn['nome'];
+                document.getElementById('tribo').innerHTML = dataConn['tribo'];
+                document.getElementById('bonus').innerHTML = dataConn['bonus'];
+                document.getElementById('bloqueados').innerHTML = dataConn['bloqueados'];
+                document.getElementById('ultima_consulta').innerHTML = dataConn['ultima_consulta'];
+                document.getElementById('conn').innerHTML = conecta[1];
+            }else{//Não tem cadastro
                 document.getElementById("cadastrar").style.display = "block";
-                document.getElementById("cadastrado").style.display = "none";
-            }else{
-                document.getElementById('username').innerHTML = localStorage.getItem("username");
             }
         }
-        
-        if (localStorage.getItem("username")!==null) {
-            document.getElementById('user_name').innerHTML = localStorage.getItem("username");
-            if(op[0] === '1') { //já tem cadastro e está no wifi
-              alert('Seguindo para Tribus');  
-              abrirTribus('http://www.tribus.atendeweb.com');
-            }  
-        }
-        if ((localStorage.getItem("username")===null)&&(op[0]==='1')) { //N tem cadastro e está conectado
+        if(conecta[0] === '2') { //Conexão via celular ... consome franquia
+            if (cadastro) {
+                document.getElementById("cadastrado").style.display = "block";
+                document.getElementById('username').innerHTML = dataConn['nome'];
+                document.getElementById('tribo').innerHTML = dataConn['tribo'];
+                document.getElementById('bonus').innerHTML = dataConn['bonus'];
+                document.getElementById('bloqueados').innerHTML = dataConn['bloqueados'];
+                document.getElementById('ultima_consulta').innerHTML = dataConn['ultima_consulta'];
+                document.getElementById('user_name').innerHTML = obj['nome'];
+                document.getElementById('conn').innerHTML = conecta[1];
+            }else{
                 //abrirTribus('http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus');  
-                var url ='http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus';
-                alert('Gerando socket...');
+                var url ='http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus'
                 cadastro(url);
+            }    
+        }    
+        if(conecta[0] === "1") { //Conectado no wifi ou Ehternet
+            if (cadastro) {
+              var url =  "http://www.atendeweb.net/atende/login/_login.php?local=tribus"; 
+              abrirTribus(url);
+            }else{
+                fazerCadastro('http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus');  
+            }
         }
-
-        
        /*
         document.getElementById('cordova').innerHTML = device.cordova;
 		document.getElementById('model').innerHTML = device.model;
-		document.getElementById('platform').innerHTML = device.platform;
-		document.getElementById('version').innerHTML = device.version;
 		document.getElementById('manufacturer').innerHTML = device.manufacturer;
 		document.getElementById('isVirtual').innerHTML = device.isVirtual;
-		document.getElementById('uuid').innerHTML = device.uuid;
 		document.getElementById('serial').innerHTML = device.serial;
        */ 
         
@@ -150,7 +145,8 @@ function abrirTribus(url){
     inAppBrowserRef.addEventListener('loadstart', loadStartCallBack);
     inAppBrowserRef.addEventListener('loadstop', loadStopCallBack);
     inAppBrowserRef.addEventListener('loaderror', loadErrorCallBack);
-}	
+}
+
 function loadStartCallBack() {
     //$('#status-message').text("Carregando, aguarde ...");
 	document.getElementById('status-message').innerHTML = "Carregando, aguarde ...";
@@ -176,9 +172,7 @@ function loadErrorCallBack(params) {
     inAppBrowserRef = undefined;
 }
 function executeScriptCallBack(params) {
- 
-    if (params[0] == null) {
- 
+     if (params[0] == null) {
         //$('#status-message').text(
         //   "Sorry we couldn't open that page. Message from the server is : '"
         //   + params.message + "'");
@@ -186,8 +180,7 @@ function executeScriptCallBack(params) {
            + params.message + "'";
     }
 } 
-
-function cadastro(url){
+function fazerCadastro(url){
     var target = "_self";
     var options = "location=no,hidden=no";
     var win = cordova.InAppBrowser.open(url, target, options);
@@ -196,26 +189,38 @@ function cadastro(url){
                     win.executeScript({ code: "document.getElementById('socket').value="+device.uuid+";" });
                     //,function( x ) { alert(x);  });
                 });
-}   
-function dataCloud(uuid){
-    var user_id = localStorage.getItem("dataConn")!==null ? localStorage.getItem('user_id') : "";
-    //var local = "http://www.atendeweb.net/atende/login/tribus/sync_rpc.php";
-      var local = "http://www.atendeweb.net/atende/tribus_sync.php";
-    
+}       
+function dataCloud(conexao){
+    var user_id = localStorage.getItem("user_id")!==null ? localStorage.getItem('user_id') : "";
+    var local = "http://www.atendeweb.net/atende/login/tribus/sync_rpc.php";
+    var UUID = device.uuid;
+    var PLATFORM = device.platform;
+    var OSVERSION = device.version;
+    //        document.getElementById('serial').innerHTML = device.serial;
+      //var local = "http://www.atendeweb.net/atende/tribus_sync.php";
     $.support.cors = true;
     $.ajax({url : local,
            crossDomain: true, 
            type : 'post',
-           data : {'action':'sync','uuid':uuid,'user_id':user_id},
+           data : {'action':'sync','uuid':UUID,'user_id':user_id,'platform':PLATFORM,'osversion':OSVERSION,'conexao':conexao},
            dataType: 'html',
-
            beforeSend: function(){
            },
            timeout: 3000,    
                 success: function(retorno){
-                    alert (retorno);
-                    localStorage.setItem("dataConn", retorno);
-                    localStorage.setItem("username", "Paulo");
+                    document.getElementById('status').innerHTML = retorno;
+                    var obj = JSON.parse(retorno);
+                    //$.each(obj, function(index, value){
+                    //});
+                    //var texto = obj['login']+"\n"+obj['nome']+"\n"+obj['tribo']+"\n"+obj['cota_bonus']+"\n"+obj['ultima_consulta']+"\n"+obj['bonus']+"\n"+obj['bloqueados'];
+
+                    //alert (texto);
+                    if(obj['login'].length > 0){
+                        localStorage.setItem("dataConn", JSON.stringify( obj ) );
+                        localStorage.setItem("user_id", obj["user_id"]);
+                    }else{
+                        localStorage.removeItem("user_id", obj["user_id"]);
+                    }    
                     app.ok_conn_sync();
                 },
                 error: function(erro){  

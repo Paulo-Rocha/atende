@@ -22,7 +22,7 @@
     <plugin name="cordova-plugin-vibration" source="npm" spec="~2.1.5" />
     
     <gap:plugin name="cordova-plugin-whitelist" source="npm" />
-    
+
     <platform name="android">
         <icon qualifier="ldpi" src="www/img/36tribus.png" />
         <icon qualifier="mdpi" src="www/img/48tribus.png" />

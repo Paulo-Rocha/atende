@@ -37,7 +37,6 @@
     * Create your own at http://cspisawesome.com
     -->
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
-
     
     <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
     <link rel="stylesheet" type="text/css" href="css/tribus.css" />
@@ -48,7 +47,6 @@
 <div data-role="content">
     <!-- Start of first page -->
 <div class="tribus-bg" data-role="page" id="home">
-
     <div data-role="header">
         <h1 class="tribus_cor">Tribus app</h1>
         <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-gear">Opções</a>
@@ -56,7 +54,7 @@
 
     <div role="main" class="ui-content">
 
-        <div id="deviceready">
+        <div id="tela_principal">
           <!--
             <h2>[-<span id="status-message"></span>]</h2>
             <p>Versão Cordova......: <span id='cordova'></span></p>  
@@ -69,17 +67,18 @@
             <p>Serial..............: <span id='serial'></span></p> 
           -->  
 
-            <div id="cadastrado">
+            <div id="cadastrado" style="display:none;">
                 <p> Olá <span id="user_name"></span></p>
-                <p> Seja bem vindo a sua tribo: Jaraguá e Região<br/></p>
+                <p> Seja bem vindo a sua tribo:<br/><ul><li id="tribo"></li></ul></p>
                 <br/>
-                <p>Bônus Disponíveis:<p>
-                <p>Bônus Bloqueados.:<p>    
+                <p>Bônus Disponíveis:<span id="bonus"></span><p>
+                <p>Bônus Bloqueados.:<span id="bloqueados"></span><p>    
                 <br/>    
-                <p>Última Atualizado em: <i>20/mai/2018</i></p>
+                <p>Última Atualizado em: <i id="ultima_consulta" style='color:blue;'></i></p>
                 <br/>
-                <p>Tipo de conexão.....: <span id='conn'></span></p> 
+                <p>Tipo de conexão: <span id='conn'></span></p> 
             </div>
+            
             <div id="cadastrar" style="display:none;">
                 <h1>Seja bem vindo ao <b>TRIBUS</b>! </h1>
                 <br/>
@@ -90,10 +89,6 @@
             <button type="button" id='btn_tribus' onclick="app.btnTribus();" disabled>Entrar</button>
             <div id="status"></div>
 
-
-   
-            
-            
         </div>
     </div><!-- /content -->
 
