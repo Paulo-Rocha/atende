@@ -33,6 +33,7 @@
 
         document.getElementById('status2').innerHTML = conecta[1]+"["+conecta[0]+"]";
         document.getElementById("btn_tribus").disabled = false;    
+        document.getElementById("favoritos").style.display = "block";
     },
     // Aguarda dados de conexão e sincronia de favoritos
     //==============================================================================================
@@ -54,11 +55,11 @@
             if(cadastro){//Já tem cadastro - exibir informações na tela
                 document.getElementById("cadastrado").style.display = "block";
                 
-                document.getElementById('username').innerHTML = dataConn['nome'];
-                document.getElementById('tribo').innerHTML = dataConn['tribo'];
-                document.getElementById('bonus').innerHTML = dataConn['bonus'];
-                document.getElementById('bloqueados').innerHTML = dataConn['bloqueados'];
-                document.getElementById('ultima_consulta').innerHTML = dataConn['ultima_consulta'];
+                document.getElementById('username').innerHTML = dataConn.nome;
+                document.getElementById('tribo').innerHTML = dataConn.tribo;
+                document.getElementById('bonus').innerHTML = dataConn.bonus;
+                document.getElementById('bloqueados').innerHTML = dataConn.bloqueados;
+                document.getElementById('ultima_consulta').innerHTML = dataConn.ultima_consulta;
                 document.getElementById('conn').innerHTML = conecta[1];
             }else{//Não tem cadastro
                 document.getElementById("cadastrar").style.display = "block";
@@ -186,8 +187,9 @@ function fazerCadastro(url){
     var win = cordova.InAppBrowser.open(url, target, options);
     //var win = window.open(url, "_blank", "EnableViewPortScale=yes" );
     win.addEventListener( "loadstop", function() {
-                    win.executeScript({ code: "document.getElementById('socket').value="+device.uuid+";" });
-                    //,function( x ) { alert(x);  });
+                    win.executeScript({ code: "document.getElementById('socket').value='"+device.uuid+"';" });
+                   //   win.executeScript({ code: "alert('"+device.uuid+"');" });
+                   //win.executeScript({ code: "alert('OI');" });
                 });
 }       
 function dataCloud(conexao){
@@ -221,12 +223,12 @@ function dataCloud(conexao){
                     }else{
                         localStorage.removeItem("user_id", obj["user_id"]);
                     }    
-                    app.ok_conn_sync();
                 },
                 error: function(erro){  
                    console.log(erro);
-                   alert("Falha ao sincronizar dados.\nSerá realizada nova tentativa na próxima conexão!\nErro:\n"+JSON.stringify(erro));
-                   document.getElementById('status').innerHTML = JSON.stringify(erro); 
-                }       
+                   //alert("Falha ao sincronizar dados.\nSerá realizada nova tentativa na próxima conexão!\nErro:\n"+JSON.stringify(erro));
+                   document.getElementById('status').innerHTML = "!"+JSON.stringify(erro); 
+                }   
     });  
+    app.ok_conn_sync();    
 }
