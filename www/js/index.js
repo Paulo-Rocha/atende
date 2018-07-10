@@ -21,40 +21,23 @@
                 }
             }
 */
+
         var conn = checkConnection();
         conecta = conn.split("|");
-        var dataConn;
-
-        if(conecta[0]!=='0'){
-            dataCloud(conecta[1]);
-        }else if (localStorage.getItem("dataConn")!==null) {
-          dataConn = localStorage.getItem("dataConn");
-        }
-
-        document.getElementById('status2').innerHTML = conecta[1]+"["+conecta[0]+"]";
-        document.getElementById("btn_tribus").disabled = false;    
-        document.getElementById("favoritos").style.display = "block";
+        document.getElementById('status2').innerHTML = "<img src='img/'"+conecta[0]+"'conn.png' width='32' height='32'>";
+        conecta[0]!=='0' ? dataCloud(conecta[1]) : ok_conn_sync();
     },
     // Aguarda dados de conexão e sincronia de favoritos
     //==============================================================================================
     ok_conn_sync: function() { 
         //buscar dados local do usuário
         var cadastro = localStorage.getItem('user_id')!==null ? true : false;
-      /*  
-        if(localStorage.getItem('user_id')!==null){
-            alert('celular cadastrado!');
-        }else{
-            alert('celular ainda não cadastrado!');
-        }
-      */  
         if(cadastro){ dataConn = JSON.parse( localStorage.getItem('dataConn') );}
-
         if(conecta[0] === '0') { //Não está conectado
             document.getElementById('btn_tribus').innerHTML = "Verificar conexão";    
 
             if(cadastro){//Já tem cadastro - exibir informações na tela
                 document.getElementById("cadastrado").style.display = "block";
-                
                 document.getElementById('username').innerHTML = dataConn.nome;
                 document.getElementById('tribo').innerHTML = dataConn.tribo;
                 document.getElementById('bonus').innerHTML = dataConn.bonus;
@@ -68,22 +51,22 @@
         if(conecta[0] === '2') { //Conexão via celular ... consome franquia
             if (cadastro) {
                 document.getElementById("cadastrado").style.display = "block";
-                document.getElementById('username').innerHTML = dataConn['nome'];
-                document.getElementById('tribo').innerHTML = dataConn['tribo'];
-                document.getElementById('bonus').innerHTML = dataConn['bonus'];
-                document.getElementById('bloqueados').innerHTML = dataConn['bloqueados'];
-                document.getElementById('ultima_consulta').innerHTML = dataConn['ultima_consulta'];
-                document.getElementById('user_name').innerHTML = obj['nome'];
+                document.getElementById('username').innerHTML = dataConn.nome;
+                document.getElementById('tribo').innerHTML = dataConn.tribo;
+                document.getElementById('bonus').innerHTML = dataConn.bonus;
+                document.getElementById('bloqueados').innerHTML = dataConn.bloqueados;
+                document.getElementById('ultima_consulta').innerHTML = dataConn.ultima_consulta;
+                document.getElementById('user_name').innerHTML = obj.nome;
                 document.getElementById('conn').innerHTML = conecta[1];
             }else{
                 //abrirTribus('http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus');  
                 var url ='http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus'
-                cadastro(url);
+                fazerCadastro(url);
             }    
         }    
         if(conecta[0] === "1") { //Conectado no wifi ou Ehternet
             if (cadastro) {
-              var url =  "http://www.atendeweb.net/atende/login/_login.php?local=tribus"; 
+              var url =  "http://www.atendeweb.net/atende/login/_login.php?local=tribus&u="+dataConn.nome; 
               abrirTribus(url);
             }else{
                 fazerCadastro('http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus');  
@@ -214,14 +197,13 @@ function dataCloud(conexao){
                     var obj = JSON.parse(retorno);
                     //$.each(obj, function(index, value){
                     //});
-                    //var texto = obj['login']+"\n"+obj['nome']+"\n"+obj['tribo']+"\n"+obj['cota_bonus']+"\n"+obj['ultima_consulta']+"\n"+obj['bonus']+"\n"+obj['bloqueados'];
 
                     //alert (texto);
-                    if(obj['login'].length > 0){
+                    if(obj.login.length > 0){
                         localStorage.setItem("dataConn", JSON.stringify( obj ) );
-                        localStorage.setItem("user_id", obj["user_id"]);
+                        localStorage.setItem("user_id", obj.user_id);
                     }else{
-                        localStorage.removeItem("user_id", obj["user_id"]);
+                        localStorage.removeItem("user_id");
                     }    
                 },
                 error: function(erro){  

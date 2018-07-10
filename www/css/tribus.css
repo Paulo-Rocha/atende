@@ -5,6 +5,10 @@
       background: url("images/fundo.png") repeat scroll center top;
       margin-top:0;
       }
+ .fav-bg{
+ 	  background: url("images/fundofav.png") repeat scroll center top;
+      margin-top:0;
+ }     
 
 .footer-button-left,
 .footer-button-right {
