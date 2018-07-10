@@ -24,7 +24,7 @@
 
         var conn = checkConnection();
         conecta = conn.split("|");
-        document.getElementById('status2').innerHTML = "<img src='img/'"+conecta[0]+"'conn.png' width='32' height='32'>";
+        document.getElementById('status2').innerHTML = "<img src='img/"+conecta[0]+"conn.png' width='32' height='32'>";
         conecta[0]!=='0' ? dataCloud(conecta[1]) : ok_conn_sync();
     },
     // Aguarda dados de conexão e sincronia de favoritos
@@ -33,8 +33,11 @@
         //buscar dados local do usuário
         var cadastro = localStorage.getItem('user_id')!==null ? true : false;
         if(cadastro){ dataConn = JSON.parse( localStorage.getItem('dataConn') );}
+
+
         if(conecta[0] === '0') { //Não está conectado
-            document.getElementById('btn_tribus').innerHTML = "Verificar conexão";    
+            alert("Acesso local, sem conexão!");
+            document.getElementById("btn_tribus").innerHTML = "Verificar conexão";    
 
             if(cadastro){//Já tem cadastro - exibir informações na tela
                 document.getElementById("cadastrado").style.display = "block";
@@ -45,6 +48,7 @@
                 document.getElementById('ultima_consulta').innerHTML = dataConn.ultima_consulta;
                 document.getElementById('conn').innerHTML = conecta[1];
             }else{//Não tem cadastro
+
                 document.getElementById("cadastrar").style.display = "block";
             }
         }
@@ -123,7 +127,7 @@ function checkConnection() {
     return states[networkState];
 }
 function abrirTribus(url){
-	var target = "_self";
+	var target = "_blank";
     var options = "location=no,hidden=no";
     inAppBrowserRef = cordova.InAppBrowser.open(url, target, options);
     inAppBrowserRef.addEventListener('loadstart', loadStartCallBack);
@@ -165,7 +169,7 @@ function executeScriptCallBack(params) {
     }
 } 
 function fazerCadastro(url){
-    var target = "_self";
+    var target = "_blank";
     var options = "location=no,hidden=no";
     var win = cordova.InAppBrowser.open(url, target, options);
     //var win = window.open(url, "_blank", "EnableViewPortScale=yes" );
