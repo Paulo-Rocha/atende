@@ -24,7 +24,7 @@
 
         var conn = checkConnection();
         conecta = conn.split("|");
-        document.getElementById('status2').innerHTML = "<img src='img/"+conecta[0]+"conn.png' width='32' height='32'>";
+        document.getElementById('status_conn').innerHTML = "<img src='img/"+conecta[0]+"conn.png' width='32' height='32'>";
         conecta[0]!=='0' ? dataCloud(conecta[1]) : ok_conn_sync();
     },
     // Aguarda dados de conexão e sincronia de favoritos
@@ -32,7 +32,10 @@
     ok_conn_sync: function() { 
         //buscar dados local do usuário
         var cadastro = localStorage.getItem('user_id')!==null ? true : false;
-        if(cadastro){ dataConn = JSON.parse( localStorage.getItem('dataConn') );}
+        if(cadastro){ 
+            dataConn = JSON.parse( localStorage.getItem('dataConn') );
+            document.getElementById('cadastro_ok').innerHTML = "<a href='' class='ui-btn ui-icon-user ui-btn-icon-notext'>User</a>"+dataConn.nome;
+        }
 
 
         if(conecta[0] === '0') { //Não está conectado
@@ -41,7 +44,7 @@
 
             if(cadastro){//Já tem cadastro - exibir informações na tela
                 document.getElementById("cadastrado").style.display = "block";
-                document.getElementById('username').innerHTML = dataConn.nome;
+                document.getElementById('user_name').innerHTML = dataConn.nome;
                 document.getElementById('tribo').innerHTML = dataConn.tribo;
                 document.getElementById('bonus').innerHTML = dataConn.bonus;
                 document.getElementById('bloqueados').innerHTML = dataConn.bloqueados;
@@ -55,7 +58,7 @@
         if(conecta[0] === '2') { //Conexão via celular ... consome franquia
             if (cadastro) {
                 document.getElementById("cadastrado").style.display = "block";
-                document.getElementById('username').innerHTML = dataConn.nome;
+                document.getElementById('user_name').innerHTML = dataConn.nome;
                 document.getElementById('tribo').innerHTML = dataConn.tribo;
                 document.getElementById('bonus').innerHTML = dataConn.bonus;
                 document.getElementById('bloqueados').innerHTML = dataConn.bloqueados;
@@ -93,7 +96,7 @@
     },
     btnTribus: function (){
         var x = document.getElementById('btn_tribus').innerHTML;
-        //alert (x);
+        alert (x);
         if(x.length===6){
             abrirTribus('http://www.tribus.atendeweb.com');
         }else{

@@ -45,6 +45,14 @@
 
 <body>
 <div data-role="content">
+
+<div data-role="footer" data-position="fixed" data-fullscreen="true">
+    <h1>Fixed Header!</h1>
+
+
+</div>
+
+
     <!-- Start of first page -->
 <div class="tribus-bg" data-role="page" id="home">
     <div data-role="header">
@@ -84,7 +92,7 @@
                 <br/>
                 <p> Você precisa de acesso a internet para completar seu cadastro!</p>
             </div>
-            <div id="status2"></div>
+            <span id="status_conn"></span><span id="cadastro_ok"></span>
 
             <button type="button" id='btn_tribus' onclick="app.btnTribus();">Entrar</button>
             <div id="status"></div>
@@ -92,11 +100,16 @@
         </div>
     </div><!-- /content -->
 
+
+
+
+
     <div data-role="footer" data-position="fixed">
         <h2>&nbsp</h2>
-        <a href="#" class="ui-btn ui-corner-all ui-btn-inline ui-mini footer-button-left ui-btn-icon-left ui-icon-power">Sair</a>
-        <a href="#favoritos" class="ui-btn ui-corner-all ui-btn-inline ui-mini footer-button-right ui-btn-icon-right ui-icon-carat-r">Favoritos</a>
-    </div><!-- /footer -->
+        <a href="#" class="ui-btn ui-corner-all ui-btn-inline ui-mini footer-button-left ui-btn-icon-left ui-icon-cloud">Atualizar</a>
+        <a href="#favoritos" class="ui-btn ui-corner-all ui-btn-inline ui-mini footer-button-right ui-btn-icon-right ui-icon-carat-r" data-transition="slide">Favoritos</a>
+    </div>
+   
 </div><!-- /page -->
 
 <!-- Start of second page -->
@@ -108,17 +121,24 @@
 
     <div role="main" class="ui-content">
         <p>Você ainda não adicionou favoritos!</p>
-		
+		<div data-role = "collapsible">
+           <legend>Sorveteria Sorvetão</legend>
+           <p>O melhor sorvete do Bairro.</p>
+        </div>
+        <div data-role = "collapsible">
+           <legend>Ótica Jaraguá</legend>
+           <p>Rua Dom Rodrigo 225.</p>
+        </div>
 		
     </div><!-- /content -->
 
     <div data-role="footer" data-position="fixed">
-        <h5>Adicione seus favoritos...</h5>
-
+        <h1></h1>
             <a href="#home" class="ui-btn ui-corner-all ui-btn-inline ui-mini footer-button-left ui-btn-icon-left 
             ui-icon-carat-l">Voltar</a>
 
-    </div><!-- /footer -->
+    </div>
+
 </div><!-- /page -->
 
 </div>

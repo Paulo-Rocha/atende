@@ -20,6 +20,7 @@
     <plugin name="cordova-plugin-globalization" source="npm" spec="~1.0.7" />
     <plugin name="cordova-plugin-inappbrowser" source="npm" spec="~1.7.1" />
     <plugin name="cordova-plugin-vibration" source="npm" spec="~2.1.5" />
+    <plugin name="cordova-plugin-splashscreen" />
     
     <gap:plugin name="cordova-plugin-whitelist" source="npm" />
 
