@@ -25,7 +25,9 @@
     //==============================================================================================
     ok_conn_sync: function() { 
         //buscar dados local do usuário
-        cadastro = localStorage.getItem('user_id')!== null ? true : false;
+
+        cadastro = localStorage.getItem("user_id") == null ? false : true;
+
         if(cadastro){ 
             dataConn = JSON.parse( localStorage.getItem('dataConn') );
             document.getElementById('cadastro_ok').innerHTML = "<img src='img/user.png' width='32' height='32' data-inline='true'>"+dataConn.nome;
