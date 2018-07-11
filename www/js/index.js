@@ -210,14 +210,16 @@ function dataCloud(conexao){
                     }else{
                         localStorage.removeItem("user_id");
                     }    
+                    app.ok_conn_sync(); 
                 },
                 error: function(erro){  
                    console.log(erro);
                    //alert("Falha ao sincronizar dados.\nSerá realizada nova tentativa na próxima conexão!\nErro:\n"+JSON.stringify(erro));
                    document.getElementById('status').innerHTML = "!"+JSON.stringify(erro); 
+                   app.ok_conn_sync(); 
                 }   
     });  
-    app.ok_conn_sync();    
+       
 }
 function teste(){
      var str = "LocalStorage:\nuser_id = "+localStorage.getItem("user_id");
