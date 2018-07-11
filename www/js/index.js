@@ -14,13 +14,7 @@
         //app.receivedEvent('deviceready');
         
         /*
-        try {
-                localStorage.setItem("username", "Paulo Rocha!");
-        }   catch (e) {
-                if (e == QUOTA_EXCEEDED_ERR) {
-                    alert('Quota excedida!');
-                }
-            }
+       
 */
         var conn = checkConnection();
         conecta = conn.split("|");
@@ -31,7 +25,7 @@
     //==============================================================================================
     ok_conn_sync: function() { 
         //buscar dados local do usuário
-        cadastro = localStorage.getItem('user_id')!==null ? true : false;
+        cadastro = localStorage.getItem('user_id')!== null ? true : false;
         if(cadastro){ 
             dataConn = JSON.parse( localStorage.getItem('dataConn') );
             document.getElementById('cadastro_ok').innerHTML = "<img src='img/user.png' width='32' height='32' data-inline='true'>"+dataConn.nome;
@@ -97,7 +91,8 @@
     btnTribus: function (){
         var conn = checkConnection();
         conecta = conn.split("|");
-        if(conecta[0] !==0 ){
+        alert("conecta[0]= "+conecta[0]);
+        if(conecta[0] !== 0 ){
             document.getElementById('btn_tribus').innerHTML = "Entrar";
             if (cadastro) {
               abrirTribus("http://www.atendeweb.net/atende/login/_login.php?local=tribus&u="+dataConn.nome); 
@@ -182,7 +177,7 @@ function fazerCadastro(url){
                 });
 }       
 function dataCloud(conexao){
-    var user_id = localStorage.getItem("user_id")!==null ? localStorage.getItem('user_id') : "";
+    var user_id = localStorage.getItem("user_id") !== null ? localStorage.getItem('user_id') : "";
     var local = "http://www.atendeweb.net/atende/login/tribus/sync_rpc.php";
     var UUID = device.uuid;
     var PLATFORM = device.platform;
@@ -207,7 +202,7 @@ function dataCloud(conexao){
                     //alert (texto);
                     if(obj.login.length > 0){
                         localStorage.setItem("dataConn", JSON.stringify( obj ) );
-                        localStorage.setItem("user_id", obj.user_id);
+                        localStorage.setItem("user_id",  obj.user_id);
                     }else{
                         localStorage.removeItem("user_id");
                     }    
@@ -220,3 +215,11 @@ function dataCloud(conexao){
     });  
     app.ok_conn_sync();    
 }
+function teste(){
+     var str = "LocalStorage:\nuser_id = "+localStorage.getItem("user_id");
+     str += "\n\nVariaveis:";
+     str += "\ncadastro:"+cadastro;
+     str += "\nconecta[0]:"+conecta[0];
+     str += "\nconecta[1]:"+conecta[1];
+     alert(str);  
+}       
