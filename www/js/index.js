@@ -23,8 +23,8 @@
 */
         var conn = checkConnection();
         conecta = conn.split("|");
-        document.getElementById('status_conn').innerHTML = "<img src='img/"+conecta[0]+"conn.png' width='32' height='32' data-inline='true'>";
-        conecta[0]!=='0' ? dataCloud(conecta[1]) : ok_conn_sync();
+        document.getElementById('status_conn').innerHTML = "<img src='img/"+conecta[0]+"conn.png' width='32' height='32' data-inline='true'>"+conecta[1];
+        conecta[0]!=='0' ? dataCloud(conecta[1]) : this.ok_conn_sync();
     },
     // Aguarda dados de conexão e sincronia de favoritos
     //==============================================================================================
@@ -38,7 +38,7 @@
 
 
         if(conecta[0] === '0') { //Não está conectado
-            alert("Acesso local, sem conexão!");
+            alert("Rede local, sem conexão!");
             document.getElementById("btn_tribus").innerHTML = "Verificar conexão";    
 
             if(cadastro){//Já tem cadastro - exibir informações na tela
@@ -120,13 +120,13 @@ function checkConnection() {
     var networkState = navigator.connection.type;
 
     var states = {};
-    states[Connection.UNKNOWN]  = '2|Não Identificada';  //1:Entra autom..2:Deixa que o usuário cilque, 0-verificar a internet
-    states[Connection.ETHERNET] = '1|Cabo de Rede';
-    states[Connection.WIFI]     = '1|Conexão WiFi';
-    states[Connection.CELL_2G]  = '2|Chip 2G';
-    states[Connection.CELL_3G]  = '2|Chip 3G';
-    states[Connection.CELL_4G]  = '2|Chip 4G';
-    states[Connection.CELL]     = '2|Celular generica conexão';
+    states[Connection.UNKNOWN]  = '2|Rede ???';  //1:Entra autom..2:Deixa que o usuário cilque, 0-verificar a internet
+    states[Connection.ETHERNET] = '1|Ethernet';
+    states[Connection.WIFI]     = '1|WiFi';
+    states[Connection.CELL_2G]  = '2|2G';
+    states[Connection.CELL_3G]  = '2|3G';
+    states[Connection.CELL_4G]  = '2|4G';
+    states[Connection.CELL]     = '2|Celular?';
     states[Connection.NONE]     = '0|Não conectado';
 
     return states[networkState];
