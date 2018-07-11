@@ -95,6 +95,7 @@
     btnTribus: function (){
         var conn = checkConnection();
         conecta = conn.split("|");
+        conecta[0] = parseInt(conecta[0]);
         alert("conecta[0]= "+conecta[0]);
         if(conecta[0] !== 0 ){
             document.getElementById('btn_tribus').innerHTML = "Entrar";
