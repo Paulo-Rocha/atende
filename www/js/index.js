@@ -20,7 +20,7 @@
         conecta = conn.split("|");
         document.getElementById('status_conn').innerHTML = "<img src='img/"+conecta[0]+"conn.png' width='32' height='32' data-inline='true'>"+conecta[1];
         conecta[0] = parseInt(conecta[0]);
-        conecta[0]!==0 ? dataCloud(conecta[1]) : this.ok_conn_sync();
+        conecta[0]!==0 ? dataCloud(conecta[1]) : app.ok_conn_sync();
     },
     // Aguarda dados de conexão e sincronia de favoritos
     //==============================================================================================
