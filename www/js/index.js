@@ -1,3 +1,4 @@
+ var cadastro;
  var dataConn;
  var conecta;
  var app = {
@@ -30,7 +31,7 @@
     //==============================================================================================
     ok_conn_sync: function() { 
         //buscar dados local do usuário
-        var cadastro = localStorage.getItem('user_id')!==null ? true : false;
+        cadastro = localStorage.getItem('user_id')!==null ? true : false;
         if(cadastro){ 
             dataConn = JSON.parse( localStorage.getItem('dataConn') );
             document.getElementById('cadastro_ok').innerHTML = "<img src='img/user.png' width='32' height='32' data-inline='true'>"+dataConn.nome;
@@ -94,22 +95,18 @@
         //alert('A API deviceready foi carregada!');
     },
     btnTribus: function (){
-        var x = document.getElementById('btn_tribus').innerHTML;
-        //alert (x);
-        if(x.length===6){
+        var conn = checkConnection();
+        conecta = conn.split("|");
+        if(conecta[0] !==0 ){
+            document.getElementById('btn_tribus').innerHTML = "Entrar";
             if (cadastro) {
               abrirTribus("http://www.atendeweb.net/atende/login/_login.php?local=tribus&u="+dataConn.nome); 
             }else{
                 fazerCadastro('http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus');  
             }
         }else{
-            var conn = checkConnection();
-            document.getElementById('conn').innerHTML = conn;
-            if(conn.length === 13) {
-                alert(conn);
-            }else{
-                document.getElementById('btn_tribus').innerHTML = "Entrar";           
-            }
+            document.getElementById('status_conn').innerHTML = "<img src='img/"+conecta[0]+"conn.png' width='32' height='32' data-inline='true'>"+conecta[1];
+            document.getElementById("btn_tribus").innerHTML = "Verificar conexão";    
         }
     }
 	
