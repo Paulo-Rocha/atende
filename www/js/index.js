@@ -19,14 +19,16 @@
         var conn = checkConnection();
         conecta = conn.split("|");
         document.getElementById('status_conn').innerHTML = "<img src='img/"+conecta[0]+"conn.png' width='32' height='32' data-inline='true'>"+conecta[1];
-        conecta[0]!=='0' ? dataCloud(conecta[1]) : this.ok_conn_sync();
+        conecta[0] = parseInt(conecta[0]);
+        conecta[0]!==0 ? dataCloud(conecta[1]) : this.ok_conn_sync();
     },
     // Aguarda dados de conexão e sincronia de favoritos
     //==============================================================================================
     ok_conn_sync: function() { 
         //buscar dados local do usuário
+        var x = localStorage.getItem("user_id");
 
-        cadastro = localStorage.getItem("user_id") == null ? false : true;
+        cadastro = x == null ? false : true;
 
         if(cadastro){ 
             dataConn = JSON.parse( localStorage.getItem('dataConn') );
@@ -34,7 +36,7 @@
         }
 
 
-        if(conecta[0] === '0') { //Não está conectado
+        if(conecta[0] === 0) { //Não está conectado
             alert("Rede local, sem conexão!");
             document.getElementById("btn_tribus").innerHTML = "Verificar conexão";    
 
@@ -51,7 +53,7 @@
                 document.getElementById("cadastrar").style.display = "block";
             }
         }
-        if(conecta[0] === '2') { //Conexão via celular ... consome franquia
+        if(conecta[0] === 2) { //Conexão via celular ... consome franquia
             if (cadastro) {
                 document.getElementById("cadastrado").style.display = "block";
                 document.getElementById('user_name').innerHTML = dataConn.nome;
@@ -67,7 +69,7 @@
                 fazerCadastro(url);
             }    
         }    
-        if(conecta[0] === "1") { //Conectado no wifi ou Ehternet
+        if(conecta[0] === 1) { //Conectado no wifi ou Ehternet
             if (cadastro) {
               var url =  "http://www.atendeweb.net/atende/login/_login.php?local=tribus&u="+dataConn.nome; 
               abrirTribus(url);
