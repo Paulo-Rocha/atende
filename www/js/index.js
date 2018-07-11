@@ -21,10 +21,9 @@
                 }
             }
 */
-
         var conn = checkConnection();
         conecta = conn.split("|");
-        document.getElementById('status_conn').innerHTML = "<img src='img/"+conecta[0]+"conn.png' width='32' height='32'>";
+        document.getElementById('status_conn').innerHTML = "<img src='img/"+conecta[0]+"conn.png' width='32' height='32' data-inline='true'>";
         conecta[0]!=='0' ? dataCloud(conecta[1]) : ok_conn_sync();
     },
     // Aguarda dados de conexão e sincronia de favoritos
@@ -34,7 +33,7 @@
         var cadastro = localStorage.getItem('user_id')!==null ? true : false;
         if(cadastro){ 
             dataConn = JSON.parse( localStorage.getItem('dataConn') );
-            document.getElementById('cadastro_ok').innerHTML = "<a href='' class='ui-btn ui-icon-user ui-btn-icon-notext'>User</a>"+dataConn.nome;
+            document.getElementById('cadastro_ok').innerHTML = "<img src='img/user.png' width='32' height='32' data-inline='true'>"+dataConn.nome;
         }
 
 
@@ -96,9 +95,13 @@
     },
     btnTribus: function (){
         var x = document.getElementById('btn_tribus').innerHTML;
-        alert (x);
+        //alert (x);
         if(x.length===6){
-            abrirTribus('http://www.tribus.atendeweb.com');
+            if (cadastro) {
+              abrirTribus("http://www.atendeweb.net/atende/login/_login.php?local=tribus&u="+dataConn.nome); 
+            }else{
+                fazerCadastro('http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus');  
+            }
         }else{
             var conn = checkConnection();
             document.getElementById('conn').innerHTML = conn;
@@ -107,7 +110,6 @@
             }else{
                 document.getElementById('btn_tribus').innerHTML = "Entrar";           
             }
-                    
         }
     }
 	
