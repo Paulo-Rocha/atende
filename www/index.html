@@ -46,21 +46,21 @@
 <body>
 <div data-role="content">
 
-<div data-role="footer" data-position="fixed" data-fullscreen="true">
-    <h1>Fixed Header!</h1>
-
-
-</div>
-
-
     <!-- Start of first page -->
-<div class="tribus-bg" data-role="page" id="home">
-    <div data-role="header">
-        <h1 class="tribus_cor">Tribus app</h1>
-        <a href="javascript:teste();" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-gear">Opções</a>
-    </div><!-- /header -->
-<div role="main" class="ui-content">    
-    <div id="coresTribo">
+    <div class="tribus-bg" data-role="page" id="home">
+        <div data-role="header">
+            <h1 class="tribus_cor">Tribus app</h1>
+            <a href="javascript:teste();" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-gear">Opções</a>
+        </div><!-- /header -->
+
+    <div role="main" class="ui-content">    
+    
+
+    <div id="coresTribo" style="height:48px">
+        
+        <span id="logoTribo">
+        <img src='images/supermercadobh.png' height='48' data-inline='true' style='float:left;'>
+        </span>
         <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" style="float:right; margin-top:0;">
             <label for="select-tribo">Select A</label>
             <select name="select-tribo" id="select-tribo" data-native-menu="false">
@@ -72,10 +72,10 @@
             
             </select>
         </fieldset>
-        <h4>Sua Tribo:</h4><hr>
+        
     </div>
 
-        <div id="tela_principal">
+        <div id="tela_principal" style="margin-top:5px">
           <!--
             <h2>[-<span id="status-message"></span>]</h2>
             <p>Versão Cordova......: <span id='cordova'></span></p>  
@@ -98,7 +98,7 @@
                 </div>    
                 <div class="bloqueados">
                     Bloqueados: <img src='img/bloqueados.png'  height='20' data-inline='true'>
-                    <b><span id="bloqueados" style="font-size: 14px;">0</span></b> / R$ <span id="valor_bloqueado"></span>
+                    <b><span id="bloqueados" style="font-size: 12px;">0</span></b> / R$ <span id="valor_bloqueado"></span>
                 </div>
                 <p>Atualizado em: <i id="ultima_consulta" style='color:blue;'></i></p>
 
