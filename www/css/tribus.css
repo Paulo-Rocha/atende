@@ -9,7 +9,21 @@
  	  background: url("images/fundofav.png") repeat scroll center top;
       margin-top:0;
  }     
+.identificacao{
+	background-color: #0000ff;
+	color: white;
+	padding:2px;
+}
 
+.bonus {
+	background-color: #0b80ea;
+    margin-top:0;
+    color: #f9c700;
+}
+.bloqueados {
+	background-color: #f9c700;
+    margin-top:0;
+}
 .footer-button-left,
 .footer-button-right {
     position:absolute !important;

@@ -13,11 +13,8 @@
         //alert ("onDeviceReady executando...");
         //app.receivedEvent('deviceready');
         
-        /*
-       
-*/
         var conn = checkConnection();
-        conecta = conn.split("|");
+        conecta = conn.split("|");   conecta[0]=2;
         document.getElementById('status_conn').innerHTML = "<img src='img/"+conecta[0]+"conn.png' width='32' height='32' data-inline='true'>"+conecta[1];
         conecta[0] = parseInt(conecta[0]);
         conecta[0]!==0 ? dataCloud(conecta[1]) : app.ok_conn_sync();
@@ -43,11 +40,20 @@
             if(cadastro){//Já tem cadastro - exibir informações na tela
                 document.getElementById("cadastrado").style.display = "block";
                 document.getElementById('user_name').innerHTML = dataConn.nome;
-                document.getElementById('tribo').innerHTML = dataConn.tribo;
+                //document.getElementById('tribo').innerHTML = dataConn.tribo;
                 document.getElementById('bonus').innerHTML = dataConn.bonus;
+                document.getElementById('valor_bonus').innerHTML = parseInt(dataConn.bonus)*dataConn.cota_bonus;
                 document.getElementById('bloqueados').innerHTML = dataConn.bloqueados;
+                document.getElementById('valor_bloqueado').innerHTML = parseInt(dataConn.bloqueados)*dataConn.cota_bonus;
+                
                 document.getElementById('ultima_consulta').innerHTML = dataConn.ultima_consulta;
-                document.getElementById('conn').innerHTML = conecta[1];
+
+
+
+
+
+
+                //document.getElementById('conn').innerHTML = conecta[1];
             }else{//Não tem cadastro
 
                 document.getElementById("cadastrar").style.display = "block";
@@ -57,12 +63,14 @@
             if (cadastro) {
                 document.getElementById("cadastrado").style.display = "block";
                 document.getElementById('user_name').innerHTML = dataConn.nome;
-                document.getElementById('tribo').innerHTML = dataConn.tribo;
+                //document.getElementById('tribo').innerHTML = dataConn.tribo;
                 document.getElementById('bonus').innerHTML = dataConn.bonus;
+                document.getElementById('valor_bonus').innerHTML = Number(parseInt(dataConn.bonus)*dataConn.cota_bonus).toFixed(2);
                 document.getElementById('bloqueados').innerHTML = dataConn.bloqueados;
+                document.getElementById('valor_bloqueado').innerHTML = Number(parseInt(dataConn.bloqueados)*dataConn.cota_bonus).toFixed(2);
                 document.getElementById('ultima_consulta').innerHTML = dataConn.ultima_consulta;
-                document.getElementById('user_name').innerHTML = obj.nome;
-                document.getElementById('conn').innerHTML = conecta[1];
+
+
             }else{
                 //abrirTribus('http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus');  
                 var url ='http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus'
@@ -71,7 +79,7 @@
         }    
         if(conecta[0] === 1) { //Conectado no wifi ou Ehternet
             if (cadastro) {
-              var url =  "http://www.atendeweb.net/atende/login/_login.php?local=tribus&u="+dataConn.nome; 
+              var url =  "http://www.atendeweb.net/atende/login/_login.php?local=tribus&u="+dataConn.login; 
               abrirTribus(url);
             }else{
                 fazerCadastro('http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus');  
@@ -95,12 +103,13 @@
     btnTribus: function (){
         var conn = checkConnection();
         conecta = conn.split("|");
+        document.getElementById('status_conn').innerHTML = "<img src='img/"+conecta[0]+"conn.png' width='32' height='32' data-inline='true'>"+conecta[1];
         conecta[0] = parseInt(conecta[0]);
         alert("conecta[0]= "+conecta[0]);
         if(conecta[0] !== 0 ){
             document.getElementById('btn_tribus').innerHTML = "Entrar";
             if (cadastro) {
-              abrirTribus("http://www.atendeweb.net/atende/login/_login.php?local=tribus&u="+dataConn.nome); 
+              abrirTribus("http://www.atendeweb.net/atende/login/_login.php?local=tribus&u="+dataConn.login); 
             }else{
                 fazerCadastro('http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus');  
             }
@@ -199,7 +208,7 @@ function dataCloud(conexao){
            },
            timeout: 3000,    
                 success: function(retorno){
-                    document.getElementById('status').innerHTML = retorno;
+                    //document.getElementById('status').innerHTML = retorno;
                     var obj = JSON.parse(retorno);
                     //$.each(obj, function(index, value){
                     //});
@@ -222,6 +231,7 @@ function dataCloud(conexao){
     });  
        
 }
+
 function teste(){
      var str = "LocalStorage:\nuser_id = "+localStorage.getItem("user_id");
      str += "\n\nVariaveis:";

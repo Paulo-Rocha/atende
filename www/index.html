@@ -59,17 +59,21 @@
         <h1 class="tribus_cor">Tribus app</h1>
         <a href="javascript:teste();" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-gear">Opções</a>
     </div><!-- /header -->
-
-    <div role="main" class="ui-content">
-        <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-            <label for="select-custom-menu">Select A</label>
-            <select name="select-custom-menu" id="select-custom-menu" data-native-menu="false">
-                <option value="#">Opção 1</option>
-                <option value="#">Opção 2</option>
-                <option value="#">Opção 3</option>
+<div role="main" class="ui-content">    
+    <div id="coresTribo">
+        <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" style="float:right; margin-top:0;">
+            <label for="select-tribo">Select A</label>
+            <select name="select-tribo" id="select-tribo" data-native-menu="false">
+                <option value="1">Jaraguá e Região</option>
+                <option value="2">Supermecado BH</option>
+                <option value="3">Governador Valadares/MG</option>
+                <option value="4">Minas Shopping/BH</option>
+                <option value="5">Shopping Oiapoque/BH</option>
             
             </select>
         </fieldset>
+        <h4>Sua Tribo:</h4><hr>
+    </div>
 
         <div id="tela_principal">
           <!--
@@ -84,16 +88,24 @@
             <p>Serial..............: <span id='serial'></span></p> 
           -->  
 
-            <div id="cadastrado" style="display:none;">
-                <p> Olá <span id="user_name"></span></p>
-                <p> Seja bem vindo a sua tribo:<br/><ul><li id="tribo"></li></ul></p>
-                <br/>
-                <p>Bônus Disponíveis:<span id="bonus"></span><p>
-                <p>Bônus Bloqueados.:<span id="bloqueados"></span><p>    
+            <div id="cadastrado" style="display:none;" >
+                <div class="identificacao">
+                    Olá <span id="user_name"></span> <!-- <span class="nome_tribo" id="tribo"></span> -->
+                </div>
+                <div class="bonus">
+                    <img src='img/bonus.png' width='48' height='48' data-inline='true' style="float: left;">
+                    <span id="bonus" style="font-size: 26px;"></span> bônus<br/>R$ <span id="valor_bonus"></span>
+                </div>    
+                <div class="bloqueados">
+                    Bloqueados: <img src='img/bloqueados.png'  height='20' data-inline='true'>
+                    <b><span id="bloqueados" style="font-size: 14px;">0</span></b> / R$ <span id="valor_bloqueado"></span>
+                </div>
+                <p>Atualizado em: <i id="ultima_consulta" style='color:blue;'></i></p>
+
                 <br/>    
-                <p>Última Atualizado em: <i id="ultima_consulta" style='color:blue;'></i></p>
+                
+                
                 <br/>
-                <p>Tipo de conexão: <span id='conn'></span></p> 
             </div>
 
             <div id="cadastrar" style="display:none;">
@@ -159,10 +171,10 @@
     <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
-
     <script type="text/javascript">
         app.initialize();
     </script>
+    <script type="text/javascript" src="js/eventos.js"></script>
 </body>
 
 </html>
