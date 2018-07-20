@@ -54,26 +54,30 @@
         </div><!-- /header -->
 
     <div role="main" class="ui-content">    
-    
 
-    <div id="coresTribo" style="height:48px">
-        
-        <span id="logoTribo">
-        <img src='images/supermercadobh.png' height='48' data-inline='true' style='float:left;'>
-        </span>
-        <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" style="float:right; margin-top:0;">
-            <label for="select-tribo">Select A</label>
-            <select name="select-tribo" id="select-tribo" data-native-menu="false">
-                <option value="1">Jaraguá e Região</option>
-                <option value="2">Supermecado BH</option>
-                <option value="3">Governador Valadares/MG</option>
-                <option value="4">Minas Shopping/BH</option>
-                <option value="5">Shopping Oiapoque/BH</option>
-            
+        <div class="ui-field-contain">
+            <label for="select-tribo">Olá <span id="user_name"></span>, sua Tribo:</label>
+            <select id="select-tribo" data-native-menu="false">
             </select>
-        </fieldset>
+        </div>    
+
+     <!--
+        <div>
+           <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" style="float:right; margin-top:0;"> 
+                <label for='select-tribo'>SELECIONE A TRIBO</label>
+                <select id='select-tribo' data-native-menu='false'>
+                </select>     
+
+           </fieldset>     
+        </div>   
+    -->
+        <div id="coresTribo" style="height:48px">
         
-    </div>
+            <span id="logoTribo">
+            <img id="imgLogo" src='img/48tribus.png' height='48' data-inline='true' style='float:left;'>
+            </span>
+        
+        </div>
 
         <div id="tela_principal" style="margin-top:5px">
           <!--
@@ -90,7 +94,7 @@
 
             <div id="cadastrado" style="display:none;" >
                 <div class="identificacao">
-                    Olá <span id="user_name"></span> <!-- <span class="nome_tribo" id="tribo"></span> -->
+                    Bonus atualizado em: <i id="ultima_consulta"></i>
                 </div>
                 <div class="bonus">
                     <img src='img/bonus.png' width='48' height='48' data-inline='true' style="float: left;">
@@ -100,7 +104,7 @@
                     Bloqueados: <img src='img/bloqueados.png'  height='20' data-inline='true'>
                     <b><span id="bloqueados" style="font-size: 12px;">0</span></b> / R$ <span id="valor_bloqueado"></span>
                 </div>
-                <p>Atualizado em: <i id="ultima_consulta" style='color:blue;'></i></p>
+                
 
                 <br/>    
                 
@@ -137,22 +141,16 @@
 </div><!-- /page -->
 
 <!-- Start of second page -->
-<div class="fav-bg" data-role="page" id="favoritos" >
+<div class="fav-bg" data-role="page" id="favoritos"> <!--data-theme="B" -->
 
     <div data-role="header">
         <h1>Meus Favoritos</h1>
     </div><!-- /header -->
 
     <div role="main" class="ui-content">
-        <p>Você ainda não adicionou favoritos!</p>
-		<div data-role = "collapsible">
-           <legend>Sorveteria Sorvetão</legend>
-           <p>O melhor sorvete do Bairro.</p>
-        </div>
-        <div data-role = "collapsible">
-           <legend>Ótica Jaraguá</legend>
-           <p>Rua Dom Rodrigo 225.</p>
-        </div>
+
+        <form id="listaFavorito">
+        </form>    
 		
     </div><!-- /content -->
 
@@ -173,8 +171,9 @@
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
         app.initialize();
-    </script>
+    </script>   
     <script type="text/javascript" src="js/eventos.js"></script>
+
 </body>
 
 </html>

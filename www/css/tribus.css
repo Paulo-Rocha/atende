@@ -40,3 +40,46 @@
  .tribus_cor {
     color:#880015;
  }
+
+/* Anuncios */
+
+a { text-decoration:none }
+
+.star{
+	 margin-left:0;
+}
+
+.avals {
+	float:right; 
+	margin-right:5px;
+	font-color: #fff200;
+	background-color:#ffd21a;
+}
+
+.atividade {
+    margin-top:5px; 
+    font-size:18px;
+    font-weight:bold;
+    color: #67d8d6;
+}
+.msg_c {
+    margin-top:2px; 
+    font-size:16px;
+    color: #a6e22b;
+}
+.msg_ben{
+    margin-top:2px; 
+    font-size:14px;
+}
+
+.free{
+    zoom: 1;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+}
+
+.vip1 {
+    //opacity: 1.0;
+}
+
+
