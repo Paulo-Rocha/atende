@@ -1,24 +1,28 @@
  var cadastro;
  var dataConn;
  var conecta;
+
+
  var app = {
     // Application Constructor
     initialize: function() {
+        this.initFastClick();
         this.bindEvents();
     },
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
+     initFastClick : function() {
+        window.addEventListener('load', function() {
+            FastClick.attach(document.body);
+        }, false);
+    },
     onDeviceReady: function() {
-        //alert ("onDeviceReady executando...");
-        //app.receivedEvent('deviceready');
-        
         var conn = checkConnection();
         conecta = conn.split("|"); 
 
 //remover a linha abaixo
-          conecta[0]=2;
-
+//          conecta[0]=2;
 
         document.getElementById('status_conn').innerHTML = "<img src='img/"+conecta[0]+"conn.png' width='32' height='32' data-inline='true'>"+conecta[1];
         conecta[0] = parseInt(conecta[0]);
@@ -29,25 +33,20 @@
     ok_conn_sync: function() { 
         //buscar dados local do usuário
         var x = localStorage.getItem("user_id");
-        
         cadastro = x == null ? false : true;
-
         if(cadastro){ 
             dataConn = JSON.parse( localStorage.getItem('dataConn') );
             document.getElementById('cadastro_ok').innerHTML = "<img src='img/user.png' width='32' height='32' data-inline='true'>"+dataConn.nome;
             var tribos=dataConn.tribos;
-            
             //Construindo o menu de tribos
             var item = "";    
             $.each(tribos, function(index, value) {
                 item += "<option value='"+index+"'>"+value.identifica+"</option> ";
             });
-            //alert(item);
             var sel_Tribo = $('#select-tribo');
                 sel_Tribo.empty().append(item);
                 sel_Tribo.selectmenu().selectmenu('refresh');
         }
-
 
         if(conecta[0] === 0) { //Não está conectado
             alert("Rede local, sem conexão!");
@@ -81,27 +80,13 @@
                 fazerCadastro('http://www.atendeweb.net/atende/admin/svcs/_page_index.php?id=7&dom=tribus');  
             }
         }
-       /*
-        document.getElementById('cordova').innerHTML = device.cordova;
-		document.getElementById('model').innerHTML = device.model;
-		document.getElementById('manufacturer').innerHTML = device.manufacturer;
-		document.getElementById('isVirtual').innerHTML = device.isVirtual;
-		document.getElementById('serial').innerHTML = device.serial;
-       */ 
-        
-    },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        console.log('Received Event: ' + id);
-        //alert('A API deviceready foi carregada!');
     },
     btnTribus: function (){
         var conn = checkConnection();
         conecta = conn.split("|");
         document.getElementById('status_conn').innerHTML = "<img src='img/"+conecta[0]+"conn.png' width='32' height='32' data-inline='true'>"+conecta[1];
         conecta[0] = parseInt(conecta[0]);
-        alert("conecta[0]= "+conecta[0]);
+        //alert("conecta[0]= "+conecta[0]);
         if(conecta[0] !== 0 ){
             document.getElementById('btn_tribus').innerHTML = "Entrar";
             if (cadastro) {
@@ -118,6 +103,9 @@
 };
 
 //===================================================================
+function onLoad(){
+    app.initialize();
+}
 function checkConnection() {
     var networkState = navigator.connection.type;
 
@@ -192,7 +180,7 @@ function dataCloud(conexao){
     var UUID = device.uuid;
     var PLATFORM = device.platform;
     var OSVERSION = device.version;
-    //        document.getElementById('serial').innerHTML = device.serial;
+    //document.getElementById('serial').innerHTML = device.serial;
       //var local = "http://www.atendeweb.net/atende/tribus_sync.php";
     $.support.cors = true;
     $.ajax({url : local,
@@ -230,7 +218,7 @@ function dataCloud(conexao){
                 error: function(erro){  
                    console.log(erro);
                    //alert("Falha ao sincronizar dados.\nSerá realizada nova tentativa na próxima conexão!\nErro:\n"+JSON.stringify(erro));
-                   document.getElementById('status').innerHTML = "!"+JSON.stringify(erro); 
+                   document.getElementById('status').innerHTML = "!";//+JSON.stringify(erro); 
                    app.ok_conn_sync(); 
                 }   
     });  
@@ -280,12 +268,12 @@ function criarFavoritos(fav){
         var tel ="<ul data-role='listview' data-inset='true'>";
             
         $.each(value.operadora, function(ind, val) {  
-           tel += "<li data-icon='phone'><a href='tel:+"+ind+"'><img src='img/tel_"+val+".png' class='ui-li-thumb'>\
+           tel += "<li data-icon='phone'><a href='tel:"+ind+"'><img src='img/tel_"+val+".png' class='ui-li-thumb'>\
                   <h2>"+val+"</h2><p>"+ind+"</p><p class='ui-li-aside'>"+value.identifica[ind]+"</p>\
                   </a></li>\
                   <li data-role='list-divider'></li>";
         });
-           tel += "</ul>";
+        tel += "</ul>";
 
 
 

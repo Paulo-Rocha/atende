@@ -43,7 +43,7 @@
     <title>Tribus</title>
 </head>
 
-<body>
+<body onLoad="onLoad();">
 <div data-role="content">
 
     <!-- Start of first page -->
@@ -166,12 +166,10 @@
 </div>
 
     <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/fastclick.min.js"></script>
     <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">
-        app.initialize();
-    </script>   
     <script type="text/javascript" src="js/eventos.js"></script>
 
 </body>
