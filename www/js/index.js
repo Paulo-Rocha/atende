@@ -268,7 +268,7 @@ function criarFavoritos(fav){
         var tel ="<ul data-role='listview' data-inset='true'>";
             
         $.each(value.operadora, function(ind, val) {  
-           tel += "<li data-icon='phone'><a href='tel:"+ind+"'><img src='img/tel_"+val+".png' class='ui-li-thumb'>\
+           tel += "<li data-icon='phone'><a href='tel://"+ind+"'><img src='img/tel_"+val+".png' class='ui-li-thumb'>\
                   <h2>"+val+"</h2><p>"+ind+"</p><p class='ui-li-aside'>"+value.identifica[ind]+"</p>\
                   </a></li>\
                   <li data-role='list-divider'></li>";
