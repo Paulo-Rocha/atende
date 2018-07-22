@@ -55,29 +55,7 @@
 
     <div role="main" class="ui-content">    
 
-        <div class="ui-field-contain">
-            <label for="select-tribo">Olá <span id="user_name"></span>, sua Tribo:</label>
-            <select id="select-tribo" data-native-menu="false">
-            </select>
-        </div>    
-
-     <!--
-        <div>
-           <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" style="float:right; margin-top:0;"> 
-                <label for='select-tribo'>SELECIONE A TRIBO</label>
-                <select id='select-tribo' data-native-menu='false'>
-                </select>     
-
-           </fieldset>     
-        </div>   
-    -->
-        <div id="coresTribo" style="height:48px">
         
-            <span id="logoTribo">
-            <img id="imgLogo" src='img/48tribus.png' height='48' data-inline='true' style='float:left;'>
-            </span>
-        
-        </div>
 
         <div id="tela_principal" style="margin-top:5px">
           <!--
@@ -93,6 +71,20 @@
           -->  
 
             <div id="cadastrado" style="display:none;" >
+
+                <div class="ui-field-contain">
+                    <label for="select-tribo">Olá <span id="user_name"></span>, sua Tribo:</label>
+                    <select id="select-tribo" data-native-menu="false">
+                    </select>
+                </div>    
+
+     
+                <div id="coresTribo" style="height:48px">
+                    <span id="logoTribo">
+                        <img id="imgLogo" src='img/48tribus.png' height='48' data-inline='true' style='float:left;'>
+                    </span>
+                </div>
+
                 <div class="identificacao">
                     Bonus atualizado em: <i id="ultima_consulta"></i>
                 </div>
