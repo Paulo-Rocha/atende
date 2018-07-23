@@ -56,6 +56,7 @@
                 case 0:
                     alert("Rede local, sem conexão!");
                     document.getElementById("btn_tribus").innerHTML = "Verificar conexão";    
+                    navigator.splashscreen.hide();
                     break;
                 case 1:
                     var url =  "http://www.atendeweb.net/atende/login/_login.php?local=tribus&u="+dataConn.login; 
@@ -63,6 +64,7 @@
                     break;
 
             }
+
         }else{
             document.getElementById("cadastrar").style.display = "block";
 
@@ -70,6 +72,7 @@
                 case 0:
                     alert("Rede local, sem conexão!");
                     document.getElementById("btn_tribus").innerHTML = "Verificar conexão";    
+                    navigator.splashscreen.hide();
                     break;
                 case 1:
                 case 2:
@@ -177,6 +180,7 @@ function loadStartCallBack() {
 }
  
 function loadStopCallBack() {
+    navigator.splashscreen.hide();
     if (inAppBrowserRef != undefined) {
         inAppBrowserRef.insertCSS({ code: "body{font-size: 25px;" });
         //$('#status-message').text("Carga interrompida!");
@@ -186,6 +190,8 @@ function loadStopCallBack() {
 }
  
 function loadErrorCallBack(params) {
+
+    navigator.splashscreen.hide();
     //$('#status-message').text("");
 	document.getElementById('status-message').innerHTML = "";
     var scriptErrorMesssage =
@@ -210,10 +216,14 @@ function fazerCadastro(url){
     var win = cordova.InAppBrowser.open(url, target, options);
     //var win = window.open(url, "_blank", "EnableViewPortScale=yes" );
     win.addEventListener( "loadstop", function() {
+                    navigator.splashscreen.hide();
                     win.executeScript({ code: "document.getElementById('socket').value='"+device.uuid+"';" });
                    //   win.executeScript({ code: "alert('"+device.uuid+"');" });
                    //win.executeScript({ code: "alert('OI');" });
                 });
+    win.addEventListener('loaderror', function() {
+        navigator.splashscreen.hide();
+    });    
 }       
 function dataCloud(conexao){
     var user_id = localStorage.getItem("user_id") !== null ? localStorage.getItem('user_id') : "";
