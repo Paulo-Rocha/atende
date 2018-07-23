@@ -45,16 +45,16 @@
         <splash density="port-xxhdpi" src="res/screen/android/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="res/screen/android/drawable-port-xxxhdpi-screen.png" />
 
-
+<!--
         <splash src="splash.png" />
-        
+-->
         <preference name="SplashScreenDelay" value = "3000" />
         <preference name="SplashMaintainAspectRatio" value = "false" />
         <preference name="ShowSplashScreen" value="true" />
         <preference name="SplashScreen" value="screen"/>
         <preference name="AutoHideSplashScreen" value="true" />
         <preference name="SplashShowOnlyFirstTime" value="false" />
-        <preference name="FadeSplashScreen" value="false"/>
+        <preference name="FadeSplashScreen" value="true"/>
     </platform>
     <platform name="ios">
         <icon height="57" platform="ios" src="www/res/icon/ios/icon.png" width="57" />

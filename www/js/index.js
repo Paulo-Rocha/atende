@@ -151,7 +151,7 @@ function checkConnection() {
     var networkState = navigator.connection.type;
 
     var states = {};
-    states[Connection.UNKNOWN]  = '2|Rede ???';  //1:Entra autom..2:Deixa que o usuário cilque, 0-verificar a internet
+    states[Connection.UNKNOWN]  = '2|Anônima!';  //1:Entra autom..2:Deixa que o usuário cilque, 0-verificar a internet
     states[Connection.ETHERNET] = '1|Ethernet';
     states[Connection.WIFI]     = '1|WiFi';
     states[Connection.CELL_2G]  = '2|2G';
