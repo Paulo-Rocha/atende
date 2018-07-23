@@ -6,6 +6,7 @@
  var app = {
     // Application Constructor
     initialize: function() {
+        navigator.splashscreen.show();
         this.initFastClick();
         this.bindEvents();
     },

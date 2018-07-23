@@ -30,11 +30,11 @@
         <icon qualifier="xhdpi" src="www/img/96tribus.png" />
         <icon qualifier="xxhdpi" src="www/img/144tribus.png" />
         <icon qualifier="xxxhdpi" src="www/img/192tribus.png" />
+
         <splash density="land-ldpi" src="res/screen/android/screen-ldpi-landscape.png" />
         <splash density="land-mdpi" src="res/screen/android/screen-mdpi-landscape.png" />
         <splash density="land-hdpi" src="res/screen/android/screen-hdpi-landscape.png" />
         <splash density="land-xhdpi" src="res/screen/android/screen-xhdpi-landscape.png" />
-
         <splash density="land-xxhdpi" src="res/screen/android/drawable-land-xxhdpi-screen.png" />
         <splash density="land-xxxhdpi" src="res/screen/android/drawable-land-xxxhdpi-screen.png" />
         
@@ -42,10 +42,12 @@
         <splash density="port-mdpi" src="res/screen/android/screen-mdpi-portrait.png" />
         <splash density="port-hdpi" src="res/screen/android/screen-hdpi-portrait.png" />
         <splash density="port-xhdpi" src="res/screen/android/screen-xhdpi-portrait.png" />
-
         <splash density="port-xxhdpi" src="res/screen/android/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="res/screen/android/drawable-port-xxxhdpi-screen.png" />
+
+
         <splash src="splash.png" />
+        
         <preference name="SplashScreenDelay" value = "3000" />
         <preference name="SplashMaintainAspectRatio" value = "false" />
         <preference name="ShowSplashScreen" value="true" />
