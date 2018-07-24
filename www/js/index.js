@@ -6,7 +6,7 @@
  var app = {
     // Application Constructor
     initialize: function() {
-        navigator.splashscreen.show();
+        //navigator.splashscreen.show();
         this.initFastClick();
         this.bindEvents();
     },
@@ -27,14 +27,15 @@
 
         document.getElementById('status_conn').innerHTML = "<img src='img/"+conecta[0]+"conn.png' width='32' height='32' data-inline='true'>"+conecta[1];
         conecta[0] = parseInt(conecta[0]);
+        //verificar teste sem conexao - remover linha abaixo
+        //conecta[0]=0;
         conecta[0]!==0 ? dataCloud(conecta[1]) : app.ok_conn_sync();
     },
     // Aguarda dados de conexão e sincronia de favoritos
     //==============================================================================================
     ok_conn_sync: function() { 
         //buscar dados local do usuário
-        var x = localStorage.getItem("user_id");
-        cadastro = x == null ? false : true;
+        var cadastro = localStorage.getItem("user_id") == null ? false : true;
         //cadastro = false;
         if(cadastro){ 
             dataConn = JSON.parse( localStorage.getItem('dataConn') );
@@ -51,18 +52,23 @@
         //} Iniciei novo bloco
             document.getElementById("cadastrado").style.display = "block";
             selecaoTribo(dataConn.default_tribo);
-
+            //Montando a tela de favoritos
+            if(Object.keys(dataConn.favorito).length>0){
+                criarFavoritos(dataConn.favorito);
+            }else{
+                $("#listaFavorito").html("<p>Você ainda não adicionou favoritos!</p>");
+            }
+            //--------------------------------------------
             switch(conecta[0]) {
                 case 0:
                     alert("Rede local, sem conexão!");
                     document.getElementById("btn_tribus").innerHTML = "Verificar conexão";    
-                    navigator.splashscreen.hide();
+                    //navigator.splashscreen.hide();
                     break;
                 case 1:
                     var url =  "http://www.atendeweb.net/atende/login/_login.php?local=tribus&u="+dataConn.login; 
                     abrirTribus(url);
                     break;
-
             }
 
         }else{
@@ -72,7 +78,7 @@
                 case 0:
                     alert("Rede local, sem conexão!");
                     document.getElementById("btn_tribus").innerHTML = "Verificar conexão";    
-                    navigator.splashscreen.hide();
+                    //navigator.splashscreen.hide();
                     break;
                 case 1:
                 case 2:
@@ -180,7 +186,7 @@ function loadStartCallBack() {
 }
  
 function loadStopCallBack() {
-    navigator.splashscreen.hide();
+    //navigator.splashscreen.hide();
     if (inAppBrowserRef != undefined) {
         inAppBrowserRef.insertCSS({ code: "body{font-size: 25px;" });
         //$('#status-message').text("Carga interrompida!");
@@ -191,7 +197,7 @@ function loadStopCallBack() {
  
 function loadErrorCallBack(params) {
 
-    navigator.splashscreen.hide();
+    //navigator.splashscreen.hide();
     //$('#status-message').text("");
 	document.getElementById('status-message').innerHTML = "";
     var scriptErrorMesssage =
@@ -216,13 +222,13 @@ function fazerCadastro(url){
     var win = cordova.InAppBrowser.open(url, target, options);
     //var win = window.open(url, "_blank", "EnableViewPortScale=yes" );
     win.addEventListener( "loadstop", function() {
-                    navigator.splashscreen.hide();
+                    //navigator.splashscreen.hide();
                     win.executeScript({ code: "document.getElementById('socket').value='"+device.uuid+"';" });
                    //   win.executeScript({ code: "alert('"+device.uuid+"');" });
                    //win.executeScript({ code: "alert('OI');" });
                 });
     win.addEventListener('loaderror', function() {
-        navigator.splashscreen.hide();
+        //navigator.splashscreen.hide();
     });    
 }       
 function dataCloud(conexao){
@@ -255,15 +261,12 @@ function dataCloud(conexao){
                         localStorage.setItem("user_id",  obj.user_id);
                         //document.getElementById('status').innerHTML = "User:"+obj.user_id+"|Tribo:"+obj.tribos[obj.default_tribo].identifica;
  
-                        if(Object.keys(obj.favorito).length>0){
-                            criarFavoritos(obj.favorito);
-                        }else{
-                            $("#listaFavorito").html("<p>Você ainda não adicionou favoritos!</p>");
-                        }
+                        
 
                     }else{
                         localStorage.removeItem("user_id");
-                    }    
+                    } 
+                       
                     app.ok_conn_sync(); 
                 },
                 error: function(erro){  
