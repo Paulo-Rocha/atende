@@ -35,11 +35,12 @@
     //==============================================================================================
     ok_conn_sync: function() { 
         //buscar dados local do usuário
-        var cadastro = localStorage.getItem("user_id") == null ? false : true;
+        cadastro = localStorage.getItem("user_id") == null ? false : true;
         //cadastro = false;
         if(cadastro){ 
             dataConn = JSON.parse( localStorage.getItem('dataConn') );
-            document.getElementById('cadastro_ok').innerHTML = "<img src='img/user.png' width='32' height='32' data-inline='true'>"+dataConn.nome;
+            var tmp = dataConn.nome !== null ? dataConn.nome : dataConn.login;
+            document.getElementById('cadastro_ok').innerHTML = "<img src='img/user.png' width='32' height='32' data-inline='true'>"+tmp;
             var tribos=dataConn.tribos;
             //Construindo o menu de tribos
             var item = "";    
@@ -51,9 +52,11 @@
                 sel_Tribo.selectmenu().selectmenu('refresh');
         //} Iniciei novo bloco
             document.getElementById("cadastrado").style.display = "block";
+            var tmp = dataConn.nome !== null ? dataConn.nome : dataConn.login;
+            document.getElementById('user_name').innerHTML = tmp;
             selecaoTribo(dataConn.default_tribo);
             //Montando a tela de favoritos
-            if(Object.keys(dataConn.favorito).length>0){
+            if(dataConn.favorito !== undefined && Object.keys(dataConn.favorito).length>0){
                 criarFavoritos(dataConn.favorito);
             }else{
                 $("#listaFavorito").html("<p>Você ainda não adicionou favoritos!</p>");
@@ -252,17 +255,12 @@ function dataCloud(conexao){
                     //alert(retorno);
                     //document.getElementById('status').innerHTML = retorno;
                     var obj = JSON.parse(retorno);
-                    //$.each(obj, function(index, value){
-                    //});
-                    document.getElementById('status').innerHTML = JSON.stringify(obj.favorito);
 
                     if(obj.login.length > 0){
                         localStorage.setItem("dataConn", JSON.stringify( obj ) );
                         localStorage.setItem("user_id",  obj.user_id);
+                        document.getElementById('status').innerHTML = ">"+JSON.stringify(obj.favorito);
                         //document.getElementById('status').innerHTML = "User:"+obj.user_id+"|Tribo:"+obj.tribos[obj.default_tribo].identifica;
- 
-                        
-
                     }else{
                         localStorage.removeItem("user_id");
                     } 
@@ -293,8 +291,7 @@ function selecaoTribo(tribo){
 
     div.style.backgroundColor =  "#"+dataConn.tribos[tribo].cor;
 
-
-    document.getElementById('user_name').innerHTML = dataConn.nome;
+    
     //document.getElementById('tribo').innerHTML = dataConn.tribo;
     document.getElementById('bonus').innerHTML = dataConn.tribos[tribo].bonus;
     document.getElementById('valor_bonus').innerHTML =     Number(parseInt(dataConn.tribos[tribo].bonus)     *dataConn.tribos[tribo].cota_bonus).toFixed(2);
